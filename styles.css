@@ -1,0 +1,483 @@
+:root {
+    --gold: #ffd700;
+    --gold-light: #fff8dc;
+    --bg-dark: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text-white: #ffffff;
+    --text-gray: #f5f5f5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    backdrop-filter: blur(40%);
+    -webkit-backdrop-filter: blur(40%);
+    color: var(--text-white);
+    overflow-y: auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#app {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Секция плаката */
+.poster-container {
+    position: relative;
+    background: var(--card-bg);
+    border-radius: 9px;
+    padding: 25px 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Текстовые стили */
+.gold-text {
+    color: var(--gold);
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, #fff8dc 0%, #ffd700 50%, #daa520 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    font-family: 'Playfair Display', 'Georgia', serif;
+}
+
+.chapter {
+    text-transform: none;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    display: block;
+    margin-top: -7px;
+    color: #a0a0a0;
+    -webkit-text-fill-color: #a0a0a0;
+    font-family: 'Cinzel', 'Georgia', serif;
+    letter-spacing: 3px;
+}
+
+.user-profile {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.photo-container {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    padding: 5px;
+    background: linear-gradient(45deg, var(--gold), transparent);
+}
+
+.photo-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.welcome-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+#user-name-placeholder {
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* Сетка деталей */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.detail-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.detail-item i {
+    color: #ffd700;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    display: block;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.detail-item span {
+    font-size: 0.9rem;
+    display: block;
+    color: #ffffff;
+}
+
+.detail-item.clickable {
+    cursor: pointer;
+}
+
+.detail-item.clickable:active {
+    transform: scale(0.95);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.detail-item.clickable:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+}
+
+/* Тултип */
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: #000;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 30;
+    margin-bottom: 8px;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--gold);
+}
+
+.tooltip.visible {
+    opacity: 1;
+}
+
+#location-item {
+    grid-column: span 2;
+}
+
+.blurred {
+    filter: blur(6px);
+    opacity: 0.5;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+}
+
+/* Инфо секция */
+.info-section {
+    margin-bottom: 30px;
+}
+
+.info-section h3 {
+    color: #ffd700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+.checklist-toggle {
+    cursor: pointer;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.checklist-toggle:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.checklist-toggle h4 {
+    font-size: 0.9rem;
+    color: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toggle-icon {
+    transition: transform 0.3s;
+    font-size: 0.7rem;
+}
+
+.toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
+.checklist {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    max-height: 300px;
+    opacity: 1;
+    padding-top: 10px;
+}
+
+.checklist.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+}
+
+.checklist ul {
+    list-style: none;
+}
+
+.checklist li {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+}
+
+.checklist li i {
+    color: #ffd700;
+    font-size: 0.7rem;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+.closing-text {
+    text-align: center;
+    font-style: italic;
+    color: #ffffff;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Кнопка фото */
+.photos-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    color: #ffd700;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    margin-bottom: 20px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.photos-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+}
+
+.photos-btn:active {
+    transform: scale(0.97);
+}
+
+/* VIP PASS */
+.vip-card {
+    background: var(--card-bg);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    padding: 17px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.vip-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    opacity: 1;
+}
+
+#vip-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 15px 0;
+    letter-spacing: 6px;
+    color: rgba(255, 255, 255, 0.95);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.barcode-wrapper {
+    background: transparent;
+    padding: 0;
+    border-radius: 4px;
+    margin: 15px auto;
+    width: fit-content;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#barcode {
+    display: block;
+}
+
+.vip-sublabel {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.65rem;
+    letter-spacing: 2.5px;
+    opacity: 0.9;
+    text-transform: uppercase;
+}
+
+/* Анимации частиц */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.dark-balloon {
+    width: 450px;
+    height: 600px;
+    background-image: url('image-removebg-preview(1).png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    bottom: -650px;
+    animation: rise-balloon 12s linear infinite;
+    opacity: 0.95;
+}
+
+.dark-balloon::after {
+    display: none;
+}
+
+.gold-star-balloon {
+    width: 270px;
+    height: 270px;
+    background-image: url('image-removebg-preview.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    bottom: -350px;
+    animation: rise-star-balloon 10s linear infinite;
+    opacity: 0.9;
+}
+
+.gold-star-balloon::after {
+    display: none;
+}
+
+@keyframes rise-balloon {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    5% { opacity: 0.95; }
+    95% { transform: translateY(-115vh) translateX(-20px) rotate(-5deg); opacity: 0.95; }
+    100% { transform: translateY(-120vh) translateX(-20px) rotate(-5deg); opacity: 0; }
+}
+
+@keyframes rise-star-balloon {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    5% { opacity: 0.9; }
+    95% { transform: translateY(-115vh) translateX(-15px) rotate(90deg); opacity: 0.9; }
+    100% { transform: translateY(-120vh) translateX(-15px) rotate(90deg); opacity: 0; }
+}
+
+/* Пульсация золотой рамки */
+@keyframes gold-pulse {
+    0%, 100% { border-color: rgba(212, 175, 55, 0.2); }
+    50% { border-color: rgba(212, 175, 55, 0.5); }
+}
+
+.poster-container {
+    animation: float 6s ease-in-out infinite, gold-pulse 4s ease-in-out infinite;
+}
+
+/* Свечение фото */
+.photo-container {
+    animation: photo-glow 3s ease-in-out infinite;
+}
+
+@keyframes photo-glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+}
+
+/* Блик на VIP */
+.vip-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 60%
+    );
+    transform: rotate(45deg);
+    animation: vip-shine 3s ease-in-out infinite;
+}
+
+@keyframes vip-shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+

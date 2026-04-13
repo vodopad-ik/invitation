@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>КЛАДНИКИ.</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles-container"></div>
+    <div id="app">
+        <div class="poster-container">
+            <div class="poster-content">
+                <header>
+                    <h1 class="gold-text">КЛАДНИКИ<br><span class="chapter">Chapter I</span></h1>
+                </header>
+
+                <div class="user-profile">
+                    <div class="photo-container">
+                        <img id="user-photo" src="https://via.placeholder.com/150">
+                    </div>
+                    <p class="welcome-text">Приглашаю именно тебя <span id="user-name-placeholder">гостя</span> на мой День рождения! Предлагаю сделать паузу в повседневности, расслабиться и уединиться на природе с замечательными людьми в суперской обстановке.</p>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item" title="Дата">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>25–26 апреля</span>
+                    </div>
+                    <div class="detail-item" title="Время">
+                        <i class="fas fa-clock"></i>
+                        <span>19:00</span>
+                    </div>
+                    <div class="detail-item clickable" id="location-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="location-content">
+                            <span class="label">Усадьба на природе</span>
+                            <span id="coordinates" class="blurred">54.0443584, 25.6312400</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-tshirt"></i> Стиль одежды: Спортивный</h3>
+                    <div class="checklist-toggle" id="checklist-toggle">
+                        <h4>Что взять с собой <i class="fas fa-chevron-down toggle-icon"></i></h4>
+                    </div>
+                    <div class="checklist collapsed" id="checklist-content">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Комплект сменной одежды</li>
+                            <li><i class="fas fa-check"></i> Легкую обувь (шлепанцы и/тапочки)</li>
+                            <li><i class="fas fa-check"></i> Ванные принадлежности (минимум 1 полотенце, шампунь и другие средства гигиены)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="closing-text">
+                    Жду тебя для незабываемого отдыха в замечательном месте!
+                </div>
+
+                <div class="event-photos-section">
+                    <div id="photos-link" class="photos-btn">
+                        <i class="fas fa-camera"></i> Фото с Дня рождения
+                    </div>
+                </div>
+
+                <div class="vip-section">
+                    <div class="vip-card">
+                        <span class="vip-label">VIP PASS</span>
+                        <span id="vip-number">0000000</span>
+                        <div class="barcode-wrapper">
+                            <svg id="barcode"></svg>
+                        </div>
+                        <span class="vip-sublabel">UNIQUE ACCESS CODE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
