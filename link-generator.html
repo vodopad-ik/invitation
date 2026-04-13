@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор ссылок приглашения</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            background: rgba(30, 30, 30, 0.8);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+            border: none;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .link-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 6px;
+            background: rgba(20, 20, 20, 0.8);
+            color: #e0e0e0;
+            font-size: 0.85rem;
+        }
+
+        .copy-btn {
+            width: auto;
+            padding: 10px 20px;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .preview {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(30, 30, 30, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview h4 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .preview-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .preview-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .preview-name {
+            color: #ffd700;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Генератор ссылок приглашения</h1>
+        
+        <div class="form-group">
+            <label for="guestName">Имя гостя:</label>
+            <input type="text" id="guestName" placeholder="Введите имя гостя">
+        </div>
+
+        <div class="form-group">
+            <label for="guestPhoto">Фото гостя (имя файла):</label>
+            <input type="text" id="guestPhoto" placeholder="Например: image.png">
+        </div>
+
+        <button onclick="generateLink()">Сгенерировать ссылку</button>
+
+        <div class="result" id="result">
+            <h3>Сгенерированная ссылка:</h3>
+            <div class="link-container">
+                <input type="text" class="link-input" id="generatedLink" readonly>
+                <button class="copy-btn" onclick="copyLink()">Копировать</button>
+            </div>
+
+            <div class="preview">
+                <h4>Предпросмотр:</h4>
+                <div class="preview-content">
+                    <img src="" alt="Preview" class="preview-img" id="previewImg">
+                    <span class="preview-name" id="previewName"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'https://vodopad-ik.github.io/invitation/';
+
+        function generateLink() {
+            const name = document.getElementById('guestName').value.trim();
+            const photo = document.getElementById('guestPhoto').value;
+
+            if (!name) {
+                alert('Пожалуйста, введите имя гостя');
+                return;
+            }
+
+            let url = BASE_URL + '?name=' + encodeURIComponent(name);
+            if (photo) {
+                url += '&photo=' + encodeURIComponent(photo);
+            }
+
+            document.getElementById('generatedLink').value = url;
+            document.getElementById('result').classList.add('show');
+
+            // Preview
+            document.getElementById('previewName').textContent = name;
+            const previewImg = document.getElementById('previewImg');
+            if (photo) {
+                previewImg.src = 'photos/' + photo;
+            } else {
+                previewImg.src = 'https://via.placeholder.com/60?text=?';
+            }
+        }
+
+        function copyLink() {
+            const linkInput = document.getElementById('generatedLink');
+            linkInput.select();
+            document.execCommand('copy');
+            
+            const copyBtn = document.querySelector('.copy-btn');
+            copyBtn.textContent = 'Скопировано!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Копировать';
+            }, 2000);
+        }
+
+        // Preview on change
+        document.getElementById('guestPhoto').addEventListener('change', function() {
+            const previewImg = document.getElementById('previewImg');
+            if (this.value) {
+                previewImg.src = 'photos/' + this.value;
+            }
+        });
+
+        document.getElementById('guestName').addEventListener('input', function() {
+            document.getElementById('previewName').textContent = this.value || '';
+        });
+    </script>
+</body>
+</html>

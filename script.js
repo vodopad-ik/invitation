@@ -10,12 +10,28 @@ const photosLink = document.getElementById('photos-link');
 const vipNumberElement = document.getElementById('vip-number');
 const locationItem = document.getElementById('location-item');
 
-// Получение данных пользователя
-const user = tg.initDataUnsafe?.user;
+// Чтение query параметров из URL
+const urlParams = new URLSearchParams(window.location.search);
+const guestName = urlParams.get('name');
+const guestPhoto = urlParams.get('photo');
 
-if (user) {
-    userNamePlaceholder.textContent = user.first_name || 'друг';
-    if (user.photo_url) {
+// Если есть параметры из URL, используем их
+if (guestName) {
+    userNamePlaceholder.textContent = guestName;
+} else {
+    // Fallback на Telegram WebApp данные
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+        userNamePlaceholder.textContent = user.first_name || 'друг';
+    }
+}
+
+if (guestPhoto) {
+    userPhoto.src = `photos/${guestPhoto}`;
+} else {
+    // Fallback на Telegram WebApp данные
+    const user = tg.initDataUnsafe?.user;
+    if (user && user.photo_url) {
         userPhoto.src = user.photo_url;
     }
 }
