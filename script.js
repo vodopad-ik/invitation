@@ -127,8 +127,8 @@ function spawnDarkBalloon() {
     const el = document.createElement('div');
     el.className = 'particle dark-balloon';
     el.style.left = Math.random() * 100 + '%';
-    el.style.width = (360 + Math.random() * 240) + 'px';
-    el.style.height = (480 + Math.random() * 300) + 'px';
+    el.style.width = (100 + Math.random() * 40) + 'px';
+    el.style.height = (140 + Math.random() * 40) + 'px';
     el.style.animationDuration = (10 + Math.random() * 6) + 's';
     container.appendChild(el);
     setTimeout(() => el.remove(), 16000);
@@ -138,7 +138,7 @@ function spawnGoldStarBalloon() {
     const el = document.createElement('div');
     el.className = 'particle gold-star-balloon';
     el.style.left = Math.random() * 100 + '%';
-    el.style.width = (210 + Math.random() * 120) + 'px';
+    el.style.width = (60 + Math.random() * 40) + 'px';
     el.style.height = el.style.width;
     el.style.animationDuration = (8 + Math.random() * 5) + 's';
     container.appendChild(el);
@@ -146,12 +146,12 @@ function spawnGoldStarBalloon() {
 }
 
 // Запуск частиц
-setInterval(spawnDarkBalloon, 2000);
-setInterval(spawnGoldStarBalloon, 1500);
+setInterval(spawnDarkBalloon, 4000);
+setInterval(spawnGoldStarBalloon, 3000);
 
 // Первоначальные частицы
-for (let i = 0; i < 4; i++) { spawnDarkBalloon(); }
-for (let i = 0; i < 4; i++) { spawnGoldStarBalloon(); }
+for (let i = 0; i < 2; i++) { spawnDarkBalloon(); }
+for (let i = 0; i < 2; i++) { spawnGoldStarBalloon(); }
 
 // === Иконки при наведении ===
 document.querySelectorAll('.detail-item i').forEach(icon => {

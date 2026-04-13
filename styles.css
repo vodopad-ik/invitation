@@ -18,7 +18,7 @@ body {
     background-image: url('background.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll;
     backdrop-filter: blur(40%);
     -webkit-backdrop-filter: blur(40%);
     color: var(--text-white);
@@ -27,6 +27,7 @@ body {
     display: flex;
     justify-content: center;
     padding: 40px 20px;
+    -webkit-overflow-scrolling: touch;
 }
 
 #particles-container {
@@ -50,11 +51,13 @@ body {
 .poster-container {
     position: relative;
     background: var(--card-bg);
-    border-radius: 9px;
+    border-radius: 8px;
     padding: 25px 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     border: 1px solid rgba(212, 175, 55, 0.15);
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite, gold-pulse 4s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 @keyframes float {
@@ -393,15 +396,17 @@ body {
 }
 
 .dark-balloon {
-    width: 450px;
-    height: 600px;
+    width: 120px;
+    height: 160px;
     background-image: url('image-removebg-preview(1).png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    bottom: -650px;
+    bottom: -200px;
     animation: rise-balloon 12s linear infinite;
     opacity: 0.95;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .dark-balloon::after {
@@ -409,15 +414,17 @@ body {
 }
 
 .gold-star-balloon {
-    width: 270px;
-    height: 270px;
+    width: 80px;
+    height: 80px;
     background-image: url('image-removebg-preview.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    bottom: -350px;
+    bottom: -150px;
     animation: rise-star-balloon 10s linear infinite;
     opacity: 0.9;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .gold-star-balloon::after {
