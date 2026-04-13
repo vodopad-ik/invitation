@@ -14,6 +14,7 @@ const locationItem = document.getElementById('location-item');
 const urlParams = new URLSearchParams(window.location.search);
 const guestName = urlParams.get('name');
 const guestPhoto = urlParams.get('photo');
+const guestFragment = urlParams.get('fragment');
 
 // Если есть параметры из URL, используем их
 if (guestName) {
@@ -24,6 +25,14 @@ if (guestName) {
     if (user) {
         userNamePlaceholder.textContent = user.first_name || 'друг';
     }
+}
+
+// Отображение фрагмента рядом с именем
+if (guestFragment) {
+    const fragmentSpan = document.createElement('span');
+    fragmentSpan.className = 'name-fragment';
+    fragmentSpan.textContent = ' ' + guestFragment;
+    userNamePlaceholder.appendChild(fragmentSpan);
 }
 
 if (guestPhoto) {

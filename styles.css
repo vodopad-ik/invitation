@@ -130,6 +130,13 @@ body {
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
 
+.name-fragment {
+    color: #ffffff;
+    font-weight: normal;
+    text-shadow: none;
+    margin-left: 5px;
+}
+
 /* Сетка деталей */
 .details-grid {
     display: grid;

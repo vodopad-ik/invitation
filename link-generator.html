@@ -180,6 +180,11 @@
             <input type="text" id="guestPhoto" placeholder="Например: image.png">
         </div>
 
+        <div class="form-group">
+            <label for="guestFragment">Фрагмент текста рядом с именем:</label>
+            <input type="text" id="guestFragment" placeholder="Например: (супер)">
+        </div>
+
         <button onclick="generateLink()">Сгенерировать ссылку</button>
 
         <div class="result" id="result">
@@ -205,6 +210,7 @@
         function generateLink() {
             const name = document.getElementById('guestName').value.trim();
             const photo = document.getElementById('guestPhoto').value;
+            const fragment = document.getElementById('guestFragment').value.trim();
 
             if (!name) {
                 alert('Пожалуйста, введите имя гостя');
@@ -215,12 +221,19 @@
             if (photo) {
                 url += '&photo=' + encodeURIComponent(photo);
             }
+            if (fragment) {
+                url += '&fragment=' + encodeURIComponent(fragment);
+            }
 
             document.getElementById('generatedLink').value = url;
             document.getElementById('result').classList.add('show');
 
             // Preview
-            document.getElementById('previewName').textContent = name;
+            let previewName = name;
+            if (fragment) {
+                previewName += ' ' + fragment;
+            }
+            document.getElementById('previewName').textContent = previewName;
             const previewImg = document.getElementById('previewImg');
             if (photo) {
                 previewImg.src = 'photos/' + photo;
@@ -250,7 +263,21 @@
         });
 
         document.getElementById('guestName').addEventListener('input', function() {
-            document.getElementById('previewName').textContent = this.value || '';
+            const fragment = document.getElementById('guestFragment').value.trim();
+            let previewName = this.value || '';
+            if (fragment) {
+                previewName += ' ' + fragment;
+            }
+            document.getElementById('previewName').textContent = previewName;
+        });
+
+        document.getElementById('guestFragment').addEventListener('input', function() {
+            const name = document.getElementById('guestName').value.trim();
+            let previewName = name || '';
+            if (this.value) {
+                previewName += ' ' + this.value;
+            }
+            document.getElementById('previewName').textContent = previewName;
         });
     </script>
 </body>
