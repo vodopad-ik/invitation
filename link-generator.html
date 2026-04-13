@@ -231,7 +231,7 @@
             // Preview
             let previewName = name;
             if (fragment) {
-                previewName += ' ' + fragment;
+                previewName += ', ' + fragment;
             }
             document.getElementById('previewName').textContent = previewName;
             const previewImg = document.getElementById('previewImg');
@@ -266,7 +266,7 @@
             const fragment = document.getElementById('guestFragment').value.trim();
             let previewName = this.value || '';
             if (fragment) {
-                previewName += ' ' + fragment;
+                previewName += ', ' + fragment;
             }
             document.getElementById('previewName').textContent = previewName;
         });
@@ -275,7 +275,7 @@
             const name = document.getElementById('guestName').value.trim();
             let previewName = name || '';
             if (this.value) {
-                previewName += ' ' + this.value;
+                previewName += ', ' + this.value;
             }
             document.getElementById('previewName').textContent = previewName;
         });

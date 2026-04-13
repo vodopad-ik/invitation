@@ -31,7 +31,7 @@ if (guestName) {
 if (guestFragment) {
     const fragmentSpan = document.createElement('span');
     fragmentSpan.className = 'name-fragment';
-    fragmentSpan.textContent = ' ' + guestFragment;
+    fragmentSpan.textContent = ', ' + guestFragment;
     userNamePlaceholder.appendChild(fragmentSpan);
 }
 
