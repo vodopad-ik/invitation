@@ -1,13 +1,3 @@
-const tg = window.Telegram.WebApp;
-
-tg.expand();
-tg.ready();
-
-// Тактильная отдача при открытии (легкая вибрация)
-if (tg.HapticFeedback) {
-    tg.HapticFeedback.impactOccurred('light');
-}
-
 const userNamePlaceholder = document.getElementById('user-name-placeholder');
 const userPhoto = document.getElementById('user-photo');
 const coordinates = document.getElementById('coordinates');
@@ -25,11 +15,7 @@ const guestFragment = urlParams.get('fragment');
 if (guestName) {
     userNamePlaceholder.textContent = guestName;
 } else {
-    // Fallback на Telegram WebApp данные
-    const user = tg.initDataUnsafe?.user;
-    if (user) {
-        userNamePlaceholder.textContent = user.first_name || 'друг';
-    }
+    userNamePlaceholder.textContent = 'гостя';
 }
 
 // Отображение фрагмента рядом с именем
@@ -42,12 +28,6 @@ if (guestFragment) {
 
 if (guestPhoto) {
     userPhoto.src = `photos/${guestPhoto}`;
-} else {
-    // Fallback на Telegram WebApp данные
-    const user = tg.initDataUnsafe?.user;
-    if (user && user.photo_url) {
-        userPhoto.src = user.photo_url;
-    }
 }
 
 // === Тултипы ===
@@ -67,9 +47,7 @@ function createTooltip(el, text) {
     el.addEventListener('click', () => { show(); setTimeout(hide, 2000); });
 }
 
-// === Проверка даты ===
-const PHOTOS_URL = 'https://example.com/birthday-photos'; // Замените на реальную ссылку
-
+// === Проверка доступности ===
 function checkAvailability() {
     const now = new Date();
     const year = now.getFullYear();
@@ -84,9 +62,9 @@ function checkAvailability() {
         locationItem.onclick = () => {
             const coords = '54.0443584, 25.6312400';
             navigator.clipboard.writeText(coords).then(() => {
-                tg.showAlert('Координаты скопированы в буфер обмена!');
+                alert('Координаты скопированы в буфер обмена!');
             }).catch(() => {
-                tg.showAlert('Координаты: ' + coords);
+                alert('Координаты: ' + coords);
             });
         };
         // Убрать тултип если был
@@ -95,17 +73,17 @@ function checkAvailability() {
     } else {
         createTooltip(locationItem, 'Доступно 21 апреля');
         locationItem.onclick = () => {
-            tg.showAlert('Координаты станут доступны 21 апреля!');
+            alert('Координаты станут доступны 21 апреля!');
         };
     }
 
     // Фото
     if (now >= eventEnd) {
         photosLink.onclick = () => {
-            navigator.clipboard.writeText(PHOTOS_URL).then(() => {
-                tg.openLink(PHOTOS_URL);
+            navigator.clipboard.writeText('https://example.com/birthday-photos').then(() => {
+                window.open('https://example.com/birthday-photos', '_blank');
             }).catch(() => {
-                tg.openLink(PHOTOS_URL);
+                window.open('https://example.com/birthday-photos', '_blank');
             });
         };
         const oldTip = photosLink.querySelector('.tooltip');
@@ -113,7 +91,7 @@ function checkAvailability() {
     } else {
         createTooltip(photosLink, 'Доступно после прохождения события');
         photosLink.onclick = () => {
-            tg.showAlert('Фотографии появятся после завершения праздника!');
+            alert('Фотографии появятся после завершения праздника!');
         };
     }
 }
