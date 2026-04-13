@@ -3,6 +3,11 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 tg.ready();
 
+// Тактильная отдача при открытии (легкая вибрация)
+if (tg.HapticFeedback) {
+    tg.HapticFeedback.impactOccurred('light');
+}
+
 const userNamePlaceholder = document.getElementById('user-name-placeholder');
 const userPhoto = document.getElementById('user-photo');
 const coordinates = document.getElementById('coordinates');
