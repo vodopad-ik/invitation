@@ -80,11 +80,7 @@ function checkAvailability() {
     // Фото
     if (now >= eventEnd) {
         photosLink.onclick = () => {
-            navigator.clipboard.writeText('https://example.com/birthday-photos').then(() => {
-                window.open('https://example.com/birthday-photos', '_blank');
-            }).catch(() => {
-                window.open('https://example.com/birthday-photos', '_blank');
-            });
+            window.location.href = 'memories.html';
         };
         const oldTip = photosLink.querySelector('.tooltip');
         if (oldTip) oldTip.remove();
