@@ -80,7 +80,7 @@ function checkAvailability() {
     // Фото
     if (now >= eventEnd) {
         photosLink.onclick = () => {
-            window.location.href = 'memories.html';
+            window.location.href = `memories.html${window.location.search}`;
         };
         const oldTip = photosLink.querySelector('.tooltip');
         if (oldTip) oldTip.remove();

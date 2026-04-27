@@ -14,7 +14,7 @@
     <div id="particles-container"></div>
     <main class="memories-shell">
         <section class="memories-hero">
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Назад к приглашению</a>
+            <a href="index.html" class="back-link" id="back-link"><i class="fas fa-arrow-left"></i> Назад к приглашению</a>
             <p class="memories-eyebrow">КЛАДНИКИ · Chapter I</p>
             <h1>Фото и видео с события</h1>
             <p>Можно открыть галерею, скачать весь архив или забрать отдельные подборки.</p>
@@ -71,5 +71,9 @@
             <p>Если файл не скачивается сразу, открой ссылку в браузере и выбери пункт “Скачать”.</p>
         </section>
     </main>
+    <script>
+        const backLink = document.getElementById('back-link');
+        backLink.href = `index.html${window.location.search}`;
+    </script>
 </body>
 </html>
